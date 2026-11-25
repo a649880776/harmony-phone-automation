@@ -18,7 +18,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 SKILL = ROOT / "SKILL.md"
-FETCH_CARD = ROOT / "scripts" / "fetch_card.py"
+SCRIPTS = ROOT / "scripts"
 LOCAL = ROOT / "sanitize.local.json"
 
 # 通用规则：不需要知道具体值即可识别
@@ -49,6 +49,14 @@ CHECK_GENERIC = [
     re.compile(r"\b[0-9]{1,2}[A-Z]{2}\d{10,}\b"),
     re.compile(r"…[a-z0-9]{4}\b"),
 ]
+
+
+def targets() -> list[Path]:
+    """需要脱敏的文件：SKILL.md + scripts/ 下的脚本。"""
+    out = [SKILL] if SKILL.exists() else []
+    if SCRIPTS.is_dir():
+        out += sorted(p for p in SCRIPTS.iterdir() if p.suffix in {".py", ".sh"})
+    return out
 
 
 def load_local() -> dict:
@@ -95,9 +103,8 @@ def main() -> int:
 
     if "--check" in sys.argv:
         bad = []
-        for f in (SKILL, FETCH_CARD):
-            if f.exists():
-                bad += leftovers(f, rules)
+        for f in targets():
+            bad += leftovers(f, rules)
         if bad:
             print("✗ 发现疑似敏感残留：")
             print("\n".join(bad[:30]))
@@ -105,9 +112,7 @@ def main() -> int:
         print("✓ 未发现残留")
         return 0
 
-    for f in (SKILL, FETCH_CARD):
-        if not f.exists():
-            continue
+    for f in targets():
         text, counts = sanitize_text(f.read_text(encoding="utf-8"), rules)
         total = sum(counts.values())
         if total:

@@ -7,7 +7,7 @@
 用法：
   ./quick_fetch.py                      # 用 .env 的 2FA_KEY 自动算码，取 profile 里的 card_id
   ./quick_fetch.py --code 713310        # 先用你给的码试一次，失败再自动算
-  ./quick_fetch.py --card-id V3LOV --json
+  ./quick_fetch.py --card-id <CARD> --json
 退出码：0 成功；2 配置缺失；3 接口报错；4 连续 2FA 错误；5 无卡号
 """
 import argparse, json, os, sys, time

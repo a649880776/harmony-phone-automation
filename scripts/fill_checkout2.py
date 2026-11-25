@@ -9,8 +9,8 @@
 顺序（业务方确认）：卡号 → 有效期 → CVV → 全名 → 国家 → 地址1 → 地址2(空) → 城市 → 州 → 邮编
 
 用法：
-  ./fill_checkout2.py --card-id V3LOV --userid 8            # 填完并自检
-  ./fill_checkout2.py --card-id V3LOV --dry-run             # 只打印将要填的内容（掩码）
+  ./fill_checkout2.py --card-id <CARD> --userid 8            # 填完并自检
+  ./fill_checkout2.py --card-id <CARD> --dry-run             # 只打印将要填的内容（掩码）
 退出码：0 成功；3 取卡失败；4 解密失败；5 填表阶段异常（见 JSON）；6 关键字段缺失
 """
 import argparse

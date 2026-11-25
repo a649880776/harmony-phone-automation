@@ -8,7 +8,7 @@ fill_checkout.py —— 5 秒内把 Stripe 结账页填完（卡信息走 API，
   * 只用 tap + text，不用任何滑动（滑动容易触发下拉刷新/放大镜，丢数据）；
   * 每个字段输入后按 Back 收键盘，让布局回到稳定状态，坐标才不会漂；
   * 不打印任何明文，只输出掩码清单。
-用法：./fill_checkout.py --card-id V3LOV --userid 8
+用法：./fill_checkout.py --card-id <CARD> --userid 8
 坐标默认值对应 1216x2688 上的 Stripe 结账页（字段刚从顶部渲染时）。
 """
 import argparse, json, os, re, subprocess, sys, time
@@ -44,7 +44,7 @@ def get_card(card_id, userid):
     return c
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--card-id", default="V3LOV"); ap.add_argument("--userid", default="8")
+ap.add_argument("--card-id", default="<CARD>"); ap.add_argument("--userid", default="8")
 ap.add_argument("--skip-name", action="store_true")
 a = ap.parse_args()
 

@@ -3,7 +3,7 @@
 
 一次进程内：取卡 → 点卡号框 → 输卡号 → （Stripe 自动跳焦）输有效期 → 输 CVV。
 键入走 ph.sh，明文只在内存，只输出脱敏状态。
-用法：./type_card.py --card-id V3LOV --pan-xy 609,781
+用法：./type_card.py --card-id <CARD> --pan-xy 609,781
 """
 import argparse, os, re, subprocess, sys, time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -15,7 +15,7 @@ def ph(*args):
                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--card-id", default="V3LOV")
+ap.add_argument("--card-id", default="<CARD>")
 ap.add_argument("--userid", default="8")
 ap.add_argument("--pan-xy", default="609,781")
 a = ap.parse_args()
