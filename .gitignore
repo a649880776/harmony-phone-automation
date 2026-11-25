@@ -1,0 +1,15 @@
+# 密文与运行时产物，永不进版本库
+.env
+.env.*
+!.env.example
+profile.json
+devin_token.json
+.pickcache.json
+audit.log
+*.log
+shots/
+*.pem
+*.key
+__pycache__/
+*.pyc
+.DS_Store

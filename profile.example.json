@@ -1,0 +1,15 @@
+{
+  "email": "you@example.com",
+  "card_id": "XXXXXX",
+  "billing": {
+    "name": "John Doe",
+    "country": "US",
+    "state": "MT",
+    "state_name": "Montana",
+    "city": "Whitefish",
+    "address1": "123 Main St",
+    "address2": "",
+    "zip": "00000",
+    "phone": "000-000-0000"
+  }
+}
