@@ -30,9 +30,19 @@ rsync -a --delete \
   --exclude 'shots/' --exclude '__pycache__/' --exclude '*.pyc' \
   --exclude '.DS_Store' \
   --exclude 'README.md' --exclude 'sync.sh' --exclude 'design/' \
+  --exclude 'sanitize.py' \
+  --exclude '.gitignore' --exclude 'profile.example.json' \
   "$SRC"/ "$REPO"/
 
 cd "$REPO"
+
+# 脱敏是同步流程的一部分：源目录是未脱敏原件，公开仓库不能原样接收
+python3 "$REPO/sanitize.py"
+python3 "$REPO/sanitize.py" --check || {
+  echo "✗ 仍有敏感残留，已中止（未提交）" >&2
+  git checkout -- . 2>/dev/null || true
+  exit 3
+}
 git add -A
 if git diff --cached --quiet; then
   echo "= 无变化，跳过提交"

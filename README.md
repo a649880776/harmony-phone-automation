@@ -84,4 +84,11 @@ design/               设计稿
 ./sync.sh "描述这次改动"
 ```
 
-`sync.sh` 会把 `~/.dsh/skills/harmony-phone-automation` 同步到本仓库（自动跳过密钥文件）并提交推送。
+`sync.sh` 会把 `~/.dsh/skills/harmony-phone-automation` 同步到本仓库（自动跳过密钥文件），
+接着调用 `sanitize.py` 做占位化，再做一次残留检查（有残留则中止、不提交），最后提交推送。
+因此**即使技能目录里是未脱敏的原件，也不会把敏感数据推上去**。
+
+```bash
+./sync.sh --dry "看看会改什么"    # 只同步 + 脱敏 + 暂存，不提交
+python3 sanitize.py --check       # 单独做一次残留体检
+```
