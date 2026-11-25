@@ -13,3 +13,5 @@ shots/
 __pycache__/
 *.pyc
 .DS_Store
+# 脱敏规则里的敏感字面量，只留本地
+sanitize.local.json

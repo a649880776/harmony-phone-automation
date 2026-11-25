@@ -135,7 +135,7 @@ hdc 优先级：`/Applications/DevEco-Studio.app/Contents/sdk/default/openharmon
 ### 流程四：Stripe 结账（卡 + 账单地址 + 协议 + 订阅）
 
 数据源：`~/Desktop/devin.json`（email / cardNumber / expiryDate / securityCode），
-地址默认 `US / Montana (MT) / Whitefish / 238 Central Ave / 59937 / 406-555-3028 / Dorian Kessler`。
+地址默认 `US / Montana (MT) / Springfield / 123 Main St / 00000 / 000-000-0000 / John Doe`。
 
 1. 币种：点 **USD**（`radioButton US USD`，点标签文字中心比点小圆点稳），金额应变成 `US$200.00`；
 2. 卡号：`tap` 卡号框 → `text "<CARD_PAN>"`（Stripe 自动 4 位分组，出现 VISA 图标即通过 Luhn）；

@@ -4,9 +4,9 @@
 契约（以接口方为准）：
   POST {CARD_API_BASE}{CARD_API_FETCH_PATH}?token={CARD_API_TOKEN}
   Content-Type: application/json
-  body: {"card_id": "<卡代号，如 <卡代号>>", "userid": <int>, "code": <6 位 TOTP>}
+  body: {"card_id": "<卡代号，如 <CARD>>", "userid": <int>, "code": <6 位 TOTP>}
   响应 data: {
-    card_id: 170, card_key: "<卡代号>",
+    card_id: 170, card_key: "<CARD>",
     card_no: "<16 位明文卡号>",            ← 明文（接口方只加密了 cvv）
     cvv: "<base64 RSA 密文>",       ← 需要用私钥解
     expiration: "11/31",
@@ -22,12 +22,12 @@
 
 用法：
   ./fetch_card.py --self-test                      # 本地自测（造密钥 + 假响应，不联网）
-  ./fetch_card.py --card-id <卡代号>                 # 拉卡，打印脱敏
-  ./fetch_card.py --card-id <卡代号> --json          # 脱敏 JSON
-  ./fetch_card.py --card-id <卡代号> \
+  ./fetch_card.py --card-id <CARD>                 # 拉卡，打印脱敏
+  ./fetch_card.py --card-id <CARD> --json          # 脱敏 JSON
+  ./fetch_card.py --card-id <CARD> \
       --fill pan=609,2184 --fill exp=358,2325 --fill cvc=860,2325 \
       --fill name=609,944 --fill address1=609,1226 --fill zip=609,1789 --fill state=609,1620
-  ./fetch_card.py --card-id <卡代号> --sync-profile  # 把 holder/street/state/zip 写进 profile.json
+  ./fetch_card.py --card-id <CARD> --sync-profile  # 把 holder/street/state/zip 写进 profile.json
 
 退出码：0 成功；2 缺配置；3 请求失败；4 CVV 解密失败；5 响应缺卡号。
 """
@@ -276,7 +276,7 @@ def self_test():
     blob = key.public_key().encrypt(
         cvv_pt, padding.OAEP(mgf=padding.MGF1(hashes.SHA256()), algorithm=hashes.SHA256(), label=None))
 
-    fake = {"card_id": 170, "card_key": "<卡代号>",
+    fake = {"card_id": 170, "card_key": "<CARD>",
             "card_no": "4242424242424242", "cvv": base64.b64encode(blob).decode(),
             "expiration": "11/31", "holder_name": "Test Holder",
             "bill_address": "123 Main St,Missouri,00000,US",
@@ -298,7 +298,7 @@ def self_test():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--env", default=DEFAULT_ENV)
-    ap.add_argument("--card-id", help="卡代号，如 <卡代号>（默认取 profile.json 的 card_ref）")
+    ap.add_argument("--card-id", help="卡代号，如 <CARD>（默认取 profile.json 的 card_ref）")
     ap.add_argument("--userid", help="数字用户 id（默认 .env 的 CARD_API_USER_ID）")
     ap.add_argument("--totp", help="手动指定 6 位码（默认本地算）")
     ap.add_argument("--key", help="RSA 私钥路径")

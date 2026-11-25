@@ -32,6 +32,7 @@ rsync -a --delete \
   --exclude 'README.md' --exclude 'sync.sh' --exclude 'design/' \
   --exclude 'sanitize.py' \
   --exclude '.gitignore' --exclude 'profile.example.json' \
+  --exclude 'sanitize.local.json' \
   "$SRC"/ "$REPO"/
 
 cd "$REPO"

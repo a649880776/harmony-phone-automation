@@ -70,9 +70,17 @@ design/               设计稿
 | --- | --- |
 | 卡后台接口 token、账号邮箱 | `<CARD_API_TOKEN>` / `<account>` |
 | 卡号（明文与打码片段） | `<CARD_PAN>` |
-| 卡代号（如 5 位业务码） | `<CARD>` / `<卡代号>` |
+| 卡代号（如 5 位业务码） | `<CARD>` |
+| 真实持卡人 / 账单地址 / 邮编 / 电话 | 假身份（John Doe / 123 Main St / 00000 / 000-000-0000） |
 | PAT 尾号 | `<PAT>` |
 | 设备号 | `<DEVICE_ID>` |
+
+通用形态（16 位卡号、打码卡号、邮箱、手机号、接口 token、设备序列号、PAT 尾号）由
+`sanitize.py` 的正则自动识别；卡代号、真实姓名/地址这类无法靠形态识别的，写在
+`sanitize.local.json` 里（**已被 `.gitignore` 屏蔽，只留在本地**，结构见 `sanitize.local.example.json`）。
+
+> 换一台机器重新 clone 后，请先按 `sanitize.local.example.json` 建好自己的 `sanitize.local.json`，
+> 否则 `./sync.sh` 抓不到卡代号等字面量，虽有残留检查兜底（会中止提交），但会来回折腾。
 
 本地运行所需的真实密钥请只写进 `.env` / `profile.json`（均已被 `.gitignore` 屏蔽）。
 
